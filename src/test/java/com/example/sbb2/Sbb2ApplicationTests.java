@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -26,11 +25,11 @@ class Sbb2ApplicationTests {
 	private AnswerRepository answerRepository;
 
 	@BeforeEach // 각 테스트 케이스가 실행되기 전에 수행되는 메서드
-	void beforeEachSetting() {
-		questionRepository.deleteAll(); //질문 테이블 모든 데이터 삭제;
-		questionRepository.clearAutoIncrement(); //다음 삽입때 ID가 1번부터 시작되도록 설정
+	void beforeEachSetting() { // 테이블 불러올때마다 수행됨
 		answerRepository.deleteAll();
 		answerRepository.clearAutoIncrement();
+		questionRepository.deleteAll(); //질문 테이블 모든 데이터 삭제;
+		questionRepository.clearAutoIncrement(); //다음 삽입때 ID가 1번부터 시작되도록 설정
 
 		Question q1 = new Question();
 		q1.setSubject("sbb1");
@@ -44,7 +43,7 @@ class Sbb2ApplicationTests {
 
 		Answer a1 = new Answer();
 		a1.setContent("ssb2 answer");
-		a1.setQuestion(q2);
+		q2.addAnswer(a1);
 		answerRepository.save(a1);
 	}
 
@@ -119,7 +118,7 @@ class Sbb2ApplicationTests {
 	}
 
 	@Test
-	void testJpaCreateAnswer() {
+	void testJpaInsertAnswer() {
 		Optional<Question> oq = questionRepository.findById(1);
 		if(oq.isPresent()){
 			Question q = oq.get();
@@ -144,7 +143,7 @@ class Sbb2ApplicationTests {
 	@Test
 	void testJpaFindAnswerConnection(){
 		Optional<Question> oq = questionRepository.findById(2);
-		if (oq.isPresent()){
+		if(oq.isPresent()){
 			Question q = oq.get();
 			List<Answer> answerList = q.getAnswerList();
 			assertEquals(1, answerList.size());
