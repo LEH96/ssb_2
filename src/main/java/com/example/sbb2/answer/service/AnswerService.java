@@ -26,4 +26,11 @@ public class AnswerService {
             answerRepository.save(answer);
         }
     }
+
+    public void create(Question question, String content) {
+        Answer answer = new Answer();
+        answer.setContent(content);
+        question.addAnswer(answer);
+        answerRepository.save(answer);
+    }
 }

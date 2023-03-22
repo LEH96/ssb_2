@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@ToString
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,7 @@ public class Question {
     // OneToMany에는 객체 초기화 꼭 해줄것!
     private List<Answer> answerList = new ArrayList<>();
 
+    // OneToMany 변수 있으면 무조건 만들어주는게 좋다
     public void addAnswer(Answer answer) {
         answer.setQuestion(this);
         answerList.add(answer); //안해주면 nullPointerException 발생, 자동으로 연결되지 않음
