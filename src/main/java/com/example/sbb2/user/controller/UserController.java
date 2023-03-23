@@ -17,6 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping("/login")
+    public String login() {
+        return "login_form";
+
+        //실제 로그인을 진행하는 @PostMapping 방식의 메서드는
+        // 스프링 시큐리티가 대신 처리하므로 직접 구현할 필요가 없다.
+    }
+
     @GetMapping("/signup")
     public String signup(UserForm userForm) {
         return "signup_form";

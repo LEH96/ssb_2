@@ -1,7 +1,10 @@
 package com.example.sbb2.user.repository;
 
-import com.example.sbb2.user.entity.User;
+import com.example.sbb2.user.entity.SiteUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<SiteUser, Long> {
+    Optional<SiteUser> findByUsername(String username);
 }
