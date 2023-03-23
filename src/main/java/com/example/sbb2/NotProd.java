@@ -26,6 +26,9 @@ public class NotProd {
             }
 
             answerService.write("test sbb2","sbb2 answer");
+            answerService.write("test sbb300","sbb300 answer");
+            answerService.write("test sbb299","sbb299 answer");
+            answerService.write("test sbb299","sbb299 answer");
         };
     }
 }

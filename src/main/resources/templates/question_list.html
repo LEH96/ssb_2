@@ -1,7 +1,7 @@
 <html layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 <div layout:fragment="content" class="container my-3">
     <table class="table">
-        <thead class="table-dark">
+        <thead class="table-primary">
         <tr>
             <th>번호</th>
             <th>제목</th>
@@ -10,9 +10,12 @@
         </thead>
         <tbody>
         <tr th:each="question, loop : ${paging}">
-            <td th:text="${loop.count}"></td>
+            <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td>
                 <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+                <span class="text-danger small ms-2"
+                th:if="${#lists.size(question.answerList) > 0}"
+                th:text="${#lists.size(question.answerList)}"></span>
             </td>
             <td th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></td>
         </tr>
@@ -21,26 +24,19 @@
     <!-- 페이징처리 시작 -->
     <div th:if="${!paging.isEmpty()}">
         <ul class="pagination justify-content-center">
-            <!--이전 페이지가 없으면 가림-->
             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-                <!--이전 페이지-->
                 <a class="page-link"
                    th:href="@{|?page=${paging.number-1}|}">
                     <span>이전</span>
                 </a>
             </li>
-            <!--페이지 리스트 / 버튼은 현재 페이지 -5 ~ +5까지 -->
             <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
                 th:if="${page >= paging.number-5 and page <= paging.number+5}"
-                <!--현재페이지 나타냄-->
                 th:classappend="${page == paging.number} ? 'active'"
                 class="page-item">
-                <!--특정 페이지로-->
                 <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
             </li>
-            <!--다음 페이지가 없으면 가림-->
             <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                <!--다음 페이지-->
                 <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
                     <span>다음</span>
                 </a>
