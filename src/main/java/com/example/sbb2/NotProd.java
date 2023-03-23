@@ -18,10 +18,14 @@ public class NotProd {
     @Bean
     public CommandLineRunner initData(){
         return args -> {
-            questionService.write("sbb1","sbb1 content");
-            questionService.write("sbb2","sbb2 content");
+            for(int i=1;i<=300;i++){
+                String subject = "test sbb" + i;
+                String content = subject + " content";
 
-            answerService.write("sbb2","sbb2 answer");
+                questionService.write(subject, content);
+            }
+
+            answerService.write("test sbb2","sbb2 answer");
         };
     }
 }
