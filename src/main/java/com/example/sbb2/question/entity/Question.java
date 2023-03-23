@@ -1,6 +1,7 @@
 package com.example.sbb2.question.entity;
 
 import com.example.sbb2.answer.entity.Answer;
+import com.example.sbb2.user.entity.SiteUser;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,6 +28,8 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     // OneToMany에는 객체 초기화 꼭 해줄것!
     private List<Answer> answerList = new ArrayList<>();
+    @ManyToOne
+    private SiteUser author;
 
     // OneToMany 변수 있으면 무조건 만들어주는게 좋다
     public void addAnswer(Answer answer) {

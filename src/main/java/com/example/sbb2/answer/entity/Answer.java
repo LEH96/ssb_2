@@ -1,6 +1,7 @@
 package com.example.sbb2.answer.entity;
 
 import com.example.sbb2.question.entity.Question;
+import com.example.sbb2.user.entity.SiteUser;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -23,4 +24,6 @@ public class Answer {
     @ManyToOne
     @ToString.Exclude // ToString 제외
     private Question question;
+    @ManyToOne
+    private SiteUser author;
 }
