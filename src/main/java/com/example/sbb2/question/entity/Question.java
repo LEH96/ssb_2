@@ -5,6 +5,7 @@ import com.example.sbb2.user.entity.SiteUser;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -30,6 +31,9 @@ public class Question {
     private List<Answer> answerList = new ArrayList<>();
     @ManyToOne
     private SiteUser author;
+
+    @LastModifiedDate
+    private LocalDateTime modifyDate;
 
     // OneToMany 변수 있으면 무조건 만들어주는게 좋다
     public void addAnswer(Answer answer) {
