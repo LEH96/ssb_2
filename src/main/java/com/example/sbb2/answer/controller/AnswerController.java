@@ -44,11 +44,8 @@ public class AnswerController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String modify(@PathVariable("id") Integer id, @Valid AnswerForm answerForm,
-                         Principal principal, BindingResult bindingResult){
-        if(bindingResult.hasErrors())
-            return "question_detail";
-
+    public String modify(@PathVariable("id") Integer id, AnswerForm answerForm,
+                         Principal principal){
         Answer answer = answerService.getAnswer(id);
         if(!answer.getAuthor().getUsername().equals(principal.getName()))
             throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
@@ -66,7 +63,7 @@ public class AnswerController {
 
         Answer answer = answerService.getAnswer(id);
         if(!answer.getAuthor().getUsername().equals(principal.getName()))
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
 
         answerService.modify(answer, answerForm.getContent());
         return "redirect:/question/detail/%s".formatted(answer.getQuestion().getId());
