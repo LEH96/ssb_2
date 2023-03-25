@@ -11,6 +11,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
@@ -31,9 +33,11 @@ public class Question {
     private List<Answer> answerList = new ArrayList<>();
     @ManyToOne
     private SiteUser author;
-
     @LastModifiedDate
     private LocalDateTime modifyDate;
+    @ManyToMany
+    //Set은 중복을 허용하지 않는 자료형
+    private Set<SiteUser> voter;
 
     // OneToMany 변수 있으면 무조건 만들어주는게 좋다
     public void addAnswer(Answer answer) {

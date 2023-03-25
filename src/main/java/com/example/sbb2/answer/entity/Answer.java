@@ -9,6 +9,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.Set;
+
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
@@ -29,4 +31,7 @@ public class Answer {
     private SiteUser author;
     @LastModifiedDate
     private LocalDateTime modifyDate;
+    @ManyToMany
+    //Set은 중복을 허용하지 않는 자료형
+    private Set<SiteUser> voter;
 }

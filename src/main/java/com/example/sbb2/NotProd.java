@@ -32,6 +32,8 @@ public class NotProd {
             answerService.write("test sbb300","sbb300 answer", null);
             answerService.write("test sbb299","sbb299 answer", null);
             answerService.write("test sbb299","sbb299 answer", null);
+
+            userService.create("user1", "123", "user1@naver.com");
         };
     }
 }
