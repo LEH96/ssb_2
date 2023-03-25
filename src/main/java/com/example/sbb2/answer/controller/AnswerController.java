@@ -38,8 +38,8 @@ public class AnswerController {
             return "question_detail";
         }
 
-        answerService.create(question, answerForm.getContent(), user);
-        return "redirect:/question/detail/%d".formatted(id);
+        Answer answer = answerService.create(question, answerForm.getContent(), user);
+        return "redirect:/question/detail/%d#answer_%d".formatted(answer.getQuestion().getId(), answer.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -66,7 +66,7 @@ public class AnswerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
 
         answerService.modify(answer, answerForm.getContent());
-        return "redirect:/question/detail/%s".formatted(answer.getQuestion().getId());
+        return "redirect:/question/detail/%d#answer_%d".formatted(answer.getQuestion().getId(), answer.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -76,7 +76,7 @@ public class AnswerController {
         if(!answer.getAuthor().getUsername().equals(principal.getName()))
             throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         answerService.delete(answer);
-        return "redirect:/question/detail/%s".formatted(answer.getQuestion().getId());
+        return "redirect:/question/detail/%d#answer_%d".formatted(answer.getQuestion().getId(), answer.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -85,6 +85,6 @@ public class AnswerController {
         Answer answer = answerService.getAnswer(id);
         SiteUser user = userService.getUser(principal.getName());
         answerService.vote(answer, user);
-        return "redirect:/question/detail/%s".formatted(answer.getQuestion().getId());
+        return "redirect:/question/detail/%d#answer_%d".formatted(answer.getQuestion().getId(), answer.getId());
     }
 }
