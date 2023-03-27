@@ -30,8 +30,8 @@ public class NotProd {
 
             answerService.write("test sbb2","sbb2 answer", null);
             answerService.write("test sbb300","sbb300 answer", null);
-            answerService.write("test sbb299","sbb299 answer", null);
-            answerService.write("test sbb299","sbb299 answer", null);
+            for(int i=1;i<=30;i++)
+                answerService.write("test sbb299","sbb299 answer "+i, null);
 
             userService.create("user1", "123", "user1@naver.com");
         };

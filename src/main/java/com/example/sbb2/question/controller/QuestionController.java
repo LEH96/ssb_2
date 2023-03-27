@@ -1,6 +1,8 @@
 package com.example.sbb2.question.controller;
 
+import com.example.sbb2.answer.entity.Answer;
 import com.example.sbb2.answer.form.AnswerForm;
+import com.example.sbb2.answer.service.AnswerService;
 import com.example.sbb2.question.entity.Question;
 import com.example.sbb2.question.form.QuestionForm;
 import com.example.sbb2.question.service.QuestionService;
@@ -23,6 +25,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 @Controller
 public class QuestionController {
+    private final AnswerService answerService;
     private final QuestionService questionService;
     private final UserService userService;
 
@@ -36,9 +39,13 @@ public class QuestionController {
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm){
+    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm,
+                         @RequestParam(value = "page", defaultValue = "0") int page){
         Question q = questionService.getQuestion(id);
         model.addAttribute("question", q);
+
+        Page<Answer> paging = answerService.getAnswerList(q, page);
+        model.addAttribute("paging", paging);
         return "question_detail";
     }
 

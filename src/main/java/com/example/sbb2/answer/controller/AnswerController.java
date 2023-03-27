@@ -9,6 +9,7 @@ import com.example.sbb2.user.entity.SiteUser;
 import com.example.sbb2.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -87,4 +88,11 @@ public class AnswerController {
         answerService.vote(answer, user);
         return "redirect:/question/detail/%d#answer_%d".formatted(answer.getQuestion().getId(), answer.getId());
     }
+
+//    @GetMapping("/list")
+//    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+//        Page<Answer> paging = answerService.getAnswerList(page);
+//        model.addAttribute("paging", paging);
+//        return "answer_list";
+//    }
 }

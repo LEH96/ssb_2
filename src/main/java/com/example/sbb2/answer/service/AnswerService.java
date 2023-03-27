@@ -7,9 +7,15 @@ import com.example.sbb2.question.entity.Question;
 import com.example.sbb2.question.repository.QuestionRepository;
 import com.example.sbb2.user.entity.SiteUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,6 +51,11 @@ public class AnswerService {
             return answer.get();
         else
             throw new DataNotFoundException("answer not found");
+    }
+
+    public Page<Answer> getAnswerList(Question q, int page){
+        Pageable pageable = PageRequest.of(page, 7);
+        return answerRepository.findAnswersByQuestion(q, pageable);
     }
 
     public void modify(Answer answer, String content){
