@@ -13,7 +13,14 @@
                     <div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
-            <div class="my-3 d-flex justify-content-end">
+            <div class="my-1 d-flex justify-content-end">
+                <div class="badge text-dark">
+                    <div class="mb-2">
+                        조회수 <span th:text="${question.view}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="my-1 d-flex justify-content-end">
                 <a href="javascript:void(0);" class="m-1 recommend btn btn-sm btn-outline-secondary"
                    th:data-uri="@{|/question/vote/${question.id}|}">
                     추천

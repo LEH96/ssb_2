@@ -46,6 +46,8 @@ public class QuestionController {
 
         Page<Answer> paging = answerService.getAnswerList(q, page);
         model.addAttribute("paging", paging);
+
+        questionService.updateView(id);
         return "question_detail";
     }
 

@@ -98,4 +98,13 @@ public class QuestionService {
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return questionRepository.findAllByKeyword(kw, pageable);
     }
+
+    public void updateView(Integer id) {
+        Optional<Question> oq = questionRepository.findById(id);
+        if(oq.isPresent()){
+            Question q = oq.get();
+            q.setView(q.getView() + 1);
+            questionRepository.save(q);
+        }
+    }
 }
